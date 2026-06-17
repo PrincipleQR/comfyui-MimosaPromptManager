@@ -1,6 +1,8 @@
 # comfyui-MimosaPromptManager
 
 这是一个用于 ComfyUI 的本地提示词管理插件。
+<img width="1875" height="1076" alt="image" src="https://github.com/user-attachments/assets/3adcfaa2-c5cc-4c97-a6ff-ef45b70a7a5e" />
+
 
 ## 安装方法
 
