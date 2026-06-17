@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "prompts": [
+    {
+      "name": "默认预设",
+      "folder": "默认文件夹",
+      "positive": "masterpiece, best quality",
+      "negative": "low quality, worst quality, blurry",
+      "tags": [
+        "基础"
+      ],
+      "note": "本地初始提示词预设。",
+      "reference_image": "",
+      "created_at": "2026-06-17T00:00:00+00:00",
+      "updated_at": "2026-06-17T00:00:00+00:00"
+    }
+  ]
+}
