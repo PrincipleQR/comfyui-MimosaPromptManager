@@ -43,6 +43,7 @@ const I18N = {
         positivePlaceholder: "请输入正向提示词",
         negativePrompt: "反向提示词",
         negativePlaceholder: "请输入反向提示词",
+        removePromptToken: "删除提示词：{token}",
         referenceImage: "参考图片",
         noReferenceImage: "未上传参考图。",
         chooseImage: "选择图片",
@@ -167,6 +168,7 @@ const I18N = {
         positivePlaceholder: "Enter positive prompt",
         negativePrompt: "Negative Prompt",
         negativePlaceholder: "Enter negative prompt",
+        removePromptToken: "Remove prompt token: {token}",
         referenceImage: "Reference Image",
         noReferenceImage: "No reference image.",
         chooseImage: "Choose Image",
@@ -845,6 +847,89 @@ function injectStyle() {
 .mpm-textarea.is-large {
     min-height: 160px;
 }
+.mpm-token-preview {
+    min-height: 42px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+    padding: 8px;
+    border: 1px solid #e0e8f2;
+    border-radius: 10px;
+    background: #fbfdff;
+}
+.mpm-token-preview:empty {
+    display: none;
+}
+.mpm-token-chip {
+    max-width: 100%;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 26px;
+    padding: 3px 4px 3px 8px;
+    border: 1px solid var(--mpm-token-border);
+    border-radius: 8px;
+    background: var(--mpm-token-bg);
+    color: var(--mpm-token-text);
+    font-size: 12px;
+    line-height: 1.45;
+    word-break: break-word;
+}
+.mpm-token-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.mpm-token-remove {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    display: inline-grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1;
+}
+.mpm-token-remove:hover {
+    background: rgba(239, 68, 68, 0.14);
+    color: #b42318;
+}
+.mpm-token-chip:nth-child(6n + 1) {
+    --mpm-token-bg: #eef6ff;
+    --mpm-token-border: #b7d8ff;
+    --mpm-token-text: #1e4f91;
+}
+.mpm-token-chip:nth-child(6n + 2) {
+    --mpm-token-bg: #f0fdf6;
+    --mpm-token-border: #a9e6c5;
+    --mpm-token-text: #236c44;
+}
+.mpm-token-chip:nth-child(6n + 3) {
+    --mpm-token-bg: #fff7ed;
+    --mpm-token-border: #fed1a8;
+    --mpm-token-text: #925122;
+}
+.mpm-token-chip:nth-child(6n + 4) {
+    --mpm-token-bg: #f7f1ff;
+    --mpm-token-border: #d6c2ff;
+    --mpm-token-text: #62449b;
+}
+.mpm-token-chip:nth-child(6n + 5) {
+    --mpm-token-bg: #fff1f2;
+    --mpm-token-border: #ffc0c8;
+    --mpm-token-text: #9f3644;
+}
+.mpm-token-chip:nth-child(6n) {
+    --mpm-token-bg: #effaf8;
+    --mpm-token-border: #a9ded7;
+    --mpm-token-text: #22665f;
+}
 .mpm-input:focus,
 .mpm-textarea:focus,
 .mpm-select:focus {
@@ -1278,6 +1363,47 @@ function injectStyle() {
 .mpm-dialog.is-dark .mpm-textarea::placeholder {
     color: #788ca5;
 }
+.mpm-dialog.is-dark .mpm-token-preview {
+    border-color: #334155;
+    background: #111827;
+}
+.mpm-dialog.is-dark .mpm-token-remove {
+    background: rgba(15, 23, 42, 0.54);
+}
+.mpm-dialog.is-dark .mpm-token-remove:hover {
+    background: rgba(248, 113, 113, 0.2);
+    color: #fecaca;
+}
+.mpm-dialog.is-dark .mpm-token-chip:nth-child(6n + 1) {
+    --mpm-token-bg: #12233a;
+    --mpm-token-border: #2f6097;
+    --mpm-token-text: #b8d9ff;
+}
+.mpm-dialog.is-dark .mpm-token-chip:nth-child(6n + 2) {
+    --mpm-token-bg: #112b1d;
+    --mpm-token-border: #2d7a4d;
+    --mpm-token-text: #b9edcf;
+}
+.mpm-dialog.is-dark .mpm-token-chip:nth-child(6n + 3) {
+    --mpm-token-bg: #332211;
+    --mpm-token-border: #9b6630;
+    --mpm-token-text: #ffd3aa;
+}
+.mpm-dialog.is-dark .mpm-token-chip:nth-child(6n + 4) {
+    --mpm-token-bg: #241a3b;
+    --mpm-token-border: #7059a8;
+    --mpm-token-text: #dacaff;
+}
+.mpm-dialog.is-dark .mpm-token-chip:nth-child(6n + 5) {
+    --mpm-token-bg: #35151c;
+    --mpm-token-border: #9b4655;
+    --mpm-token-text: #ffc8d0;
+}
+.mpm-dialog.is-dark .mpm-token-chip:nth-child(6n) {
+    --mpm-token-bg: #112b2b;
+    --mpm-token-border: #347b78;
+    --mpm-token-text: #b7ece8;
+}
 .mpm-dialog.is-dark .mpm-select {
     background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23d5e1f0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -1546,6 +1672,95 @@ function truncateText(value, length = 120) {
     return text.length > length ? `${text.slice(0, length)}...` : text;
 }
 
+function promptTokenParts(value) {
+    const source = String(value || "");
+    const parts = [];
+    const delimiterPattern = /[,，]+/g;
+    let segmentStart = 0;
+    let match;
+
+    function pushPart(segmentEnd) {
+        const raw = source.slice(segmentStart, segmentEnd);
+        const leadingLength = raw.match(/^\s*/)?.[0].length || 0;
+        const trailingLength = raw.match(/\s*$/)?.[0].length || 0;
+        const tokenStart = segmentStart + leadingLength;
+        const tokenEnd = segmentEnd - trailingLength;
+
+        if (tokenEnd > tokenStart) {
+            parts.push({
+                text: source.slice(tokenStart, tokenEnd),
+                segmentStart,
+                segmentEnd,
+            });
+        }
+    }
+
+    while ((match = delimiterPattern.exec(source)) !== null) {
+        pushPart(match.index);
+        segmentStart = delimiterPattern.lastIndex;
+    }
+    pushPart(source.length);
+
+    return parts;
+}
+
+function promptTokens(value) {
+    return promptTokenParts(value).map((part) => part.text);
+}
+
+function removePromptToken(input, index) {
+    if (!input) {
+        return;
+    }
+
+    const source = String(input.value || "");
+    const parts = promptTokenParts(source);
+    const part = parts[index];
+    if (!part) {
+        return;
+    }
+
+    let removeStart = part.segmentStart;
+    let removeEnd = part.segmentEnd;
+    if (parts.length > 1 && index === 0) {
+        removeEnd = parts[index + 1].segmentStart;
+    } else if (parts.length > 1 && index > 0) {
+        removeStart = parts[index - 1].segmentEnd;
+    }
+
+    input.value = `${source.slice(0, removeStart)}${source.slice(removeEnd)}`.replace(/^[,，\s]+|[,，\s]+$/g, "");
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.focus();
+}
+
+function renderTokenPreview(container, input) {
+    if (!container || !input) {
+        return;
+    }
+
+    container.replaceChildren();
+    for (const [index, token] of promptTokens(input.value).entries()) {
+        const chip = el("span", "mpm-token-chip");
+        const tokenText = el("span", "mpm-token-text", token);
+        const removeButton = el("button", "mpm-token-remove", "×");
+        removeButton.type = "button";
+        removeButton.title = t("removePromptToken", { token });
+        removeButton.setAttribute("aria-label", t("removePromptToken", { token }));
+        removeButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            removePromptToken(input, index);
+        });
+        chip.append(tokenText, removeButton);
+        container.appendChild(chip);
+    }
+}
+
+function updatePromptTokenPreviews() {
+    renderTokenPreview(state.refs.positiveTokens, state.refs.positive);
+    renderTokenPreview(state.refs.negativeTokens, state.refs.negative);
+}
+
 function summarisePrompt(entry) {
     return {
         primary: truncateText(entry.positive || entry.note || "", 110) || t("summaryPositiveMissing"),
@@ -1623,6 +1838,7 @@ function writeForm(prompt) {
     state.refs.note.value = item.note || "";
     state.refs.private.checked = isPrivatePrompt(item);
     state.refs.folderExisting.value = "";
+    updatePromptTokenPreviews();
     updateReferencePreview();
 }
 
@@ -1916,6 +2132,7 @@ function updateBottomBar() {
     state.refs.actionImport.hidden = !isLibrary;
     state.refs.actionExport.hidden = !isLibrary;
     state.refs.actionSave.hidden = isLibrary;
+    state.refs.actionCancel.hidden = isLibrary;
     state.refs.actionInsert.hidden = isLibrary;
     state.refs.actionDelete.hidden = isLibrary;
 
@@ -2752,10 +2969,12 @@ function createManager() {
                     <label class="mpm-field">
                         <span class="mpm-label is-required" data-i18n="positivePrompt">正向提示词</span>
                         <textarea class="mpm-textarea is-large" data-mpm="positive" data-i18n-placeholder="positivePlaceholder" placeholder="请输入正向提示词" required></textarea>
+                        <div class="mpm-token-preview" data-mpm="positive-tokens"></div>
                     </label>
                     <label class="mpm-field">
                         <span class="mpm-label is-required" data-i18n="negativePrompt">反向提示词</span>
                         <textarea class="mpm-textarea is-large" data-mpm="negative" data-i18n-placeholder="negativePlaceholder" placeholder="请输入反向提示词" required></textarea>
+                        <div class="mpm-token-preview" data-mpm="negative-tokens"></div>
                     </label>
                     <div class="mpm-reference">
                         <span class="mpm-label" data-i18n="referenceImage">参考图片</span>
@@ -2792,6 +3011,7 @@ function createManager() {
             <button class="mpm-button" type="button" data-mpm="action-import" data-i18n="actionImport">导入</button>
             <button class="mpm-button" type="button" data-mpm="action-export" data-i18n="actionExport">导出</button>
             <button class="mpm-button is-primary" type="button" data-mpm="action-save" data-i18n="actionSave">保存</button>
+            <button class="mpm-button" type="button" data-mpm="action-cancel" data-i18n="cancel">取消</button>
             <button class="mpm-button" type="button" data-mpm="action-insert" data-i18n="actionInsert">写入节点</button>
             <button class="mpm-button is-danger" type="button" data-mpm="action-delete" data-i18n="actionDelete">删除</button>
             <input class="mpm-file" type="file" accept="application/json,.json" data-mpm="file" />
@@ -2865,7 +3085,9 @@ function createManager() {
         tags: overlay.querySelector('[data-mpm="tags"]'),
         private: overlay.querySelector('[data-mpm="private"]'),
         positive: overlay.querySelector('[data-mpm="positive"]'),
+        positiveTokens: overlay.querySelector('[data-mpm="positive-tokens"]'),
         negative: overlay.querySelector('[data-mpm="negative"]'),
+        negativeTokens: overlay.querySelector('[data-mpm="negative-tokens"]'),
         note: overlay.querySelector('[data-mpm="note"]'),
         referenceBox: overlay.querySelector('[data-mpm="reference-box"]'),
         referenceImage: overlay.querySelector('[data-mpm="reference-image"]'),
@@ -2884,6 +3106,7 @@ function createManager() {
         actionImport: overlay.querySelector('[data-mpm="action-import"]'),
         actionExport: overlay.querySelector('[data-mpm="action-export"]'),
         actionSave: overlay.querySelector('[data-mpm="action-save"]'),
+        actionCancel: overlay.querySelector('[data-mpm="action-cancel"]'),
         actionInsert: overlay.querySelector('[data-mpm="action-insert"]'),
         actionDelete: overlay.querySelector('[data-mpm="action-delete"]'),
         file: overlay.querySelector('[data-mpm="file"]'),
@@ -2923,6 +3146,8 @@ function createManager() {
     state.refs.search.addEventListener("input", renderList);
     state.refs.list.addEventListener("scroll", updateBackToTopButton);
     state.refs.name.addEventListener("input", updateBottomBar);
+    state.refs.positive.addEventListener("input", updatePromptTokenPreviews);
+    state.refs.negative.addEventListener("input", updatePromptTokenPreviews);
 
     state.refs.back.addEventListener("click", () => setView("library"));
     state.refs.tabLibrary.addEventListener("click", () => setView("library"));
@@ -3001,6 +3226,7 @@ function createManager() {
     state.refs.actionImport.addEventListener("click", () => state.refs.file.click());
     state.refs.actionExport.addEventListener("click", exportPrompts);
     state.refs.actionSave.addEventListener("click", () => savePrompt().catch((error) => setStatus(error.message)));
+    state.refs.actionCancel.addEventListener("click", () => setView("library"));
     state.refs.actionInsert.addEventListener("click", writePresetToNode);
     state.refs.actionDelete.addEventListener("click", () => deletePrompt().catch((error) => setStatus(error.message)));
 
