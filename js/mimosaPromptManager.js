@@ -25,7 +25,7 @@ const I18N = {
         tableName: "名称",
         tableFolder: "文件夹",
         tableTags: "标签",
-        tableContent: "提示词内容",
+        tableContent: "备注",
         tablePreview: "预览",
         tableActions: "操作",
         backLibrary: "返回词库",
@@ -78,6 +78,7 @@ const I18N = {
         allTags: "全部标签",
         summaryPositiveMissing: "未填写正向提示词。",
         summaryNegativeMissing: "未填写反向提示词。",
+        summaryNoteMissing: "未填写备注。",
         previewPending: "待保存图片：{name}",
         previewSaved: "已保存图片：{name}",
         viewLarge: "查看大图",
@@ -150,7 +151,7 @@ const I18N = {
         tableName: "Name",
         tableFolder: "Folder",
         tableTags: "Tags",
-        tableContent: "Prompt",
+        tableContent: "Note",
         tablePreview: "Preview",
         tableActions: "Actions",
         backLibrary: "Back to Library",
@@ -203,6 +204,7 @@ const I18N = {
         allTags: "All Tags",
         summaryPositiveMissing: "No positive prompt.",
         summaryNegativeMissing: "No negative prompt.",
+        summaryNoteMissing: "No note.",
         previewPending: "Pending image: {name}",
         previewSaved: "Saved image: {name}",
         viewLarge: "View full image",
@@ -1763,8 +1765,7 @@ function updatePromptTokenPreviews() {
 
 function summarisePrompt(entry) {
     return {
-        primary: truncateText(entry.positive || entry.note || "", 110) || t("summaryPositiveMissing"),
-        secondary: truncateText(entry.negative || "", 100) || t("summaryNegativeMissing"),
+        primary: truncateText(entry.note || "", 110) || t("summaryNoteMissing"),
     };
 }
 
@@ -2479,10 +2480,7 @@ function renderList() {
 
         const summary = summarisePrompt(entry);
         const summaryCell = el("div", "mpm-cell mpm-summary");
-        summaryCell.append(
-            el("div", "mpm-summary-primary", summary.primary),
-            el("div", "mpm-summary-secondary", summary.secondary),
-        );
+        summaryCell.appendChild(el("div", "mpm-summary-primary", summary.primary));
 
         const previewCell = el("div", "mpm-cell");
         const preview = el("div", "mpm-preview");
@@ -2928,7 +2926,7 @@ function createManager() {
                         <div data-i18n="tableName">名称</div>
                         <div data-i18n="tableFolder">文件夹</div>
                         <div data-i18n="tableTags">标签</div>
-                        <div data-i18n="tableContent">提示词内容</div>
+                        <div data-i18n="tableContent">备注</div>
                         <div data-i18n="tablePreview">预览</div>
                         <div data-i18n="tableActions">操作</div>
                     </div>
